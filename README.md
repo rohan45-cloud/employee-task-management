@@ -30,7 +30,7 @@ MERN implementation for the Roots Media Marketing MERN Stack Developer Intern as
 Backend `.env`:
 - `PORT`: API port (default 5000)
 - `MONGO_URI`: MongoDB connection string
-- `CLIENT_URL`: frontend origin for CORS
+- `CLIENT_URL`: frontend origin(s) allowed by CORS, without a trailing slash. Multiple origins can be comma separated.
 
 Frontend `.env`:
 - `VITE_API_URL`: backend base URL, e.g. `http://localhost:5000/api`
@@ -75,10 +75,17 @@ An Employee has a unique employeeId and normalized unique email. A Task stores `
 10. **Assumptions:** task department is selected explicitly and may differ from employee department; employee skills are an array of strings; employee phone is stored as a string; task status can only change through the dedicated status endpoint.
 
 ## Deployment
-- Deploy `backend` to Render (Root Directory `backend`, Build `npm install`, Start `npm start`). Configure `MONGO_URI`, `CLIENT_URL`, and `PORT` if needed.
-- Deploy `frontend` to Vercel (Root Directory `frontend`, Build `npm run build`, Output `dist`). Set `VITE_API_URL` to `https://YOUR-BACKEND.onrender.com/api`.
-- Add a Vercel rewrite for SPA routing if required (see `frontend/vercel.json`).
-- Test both deployment URLs and the CSV download before submission.
+- **Frontend (Vercel):** https://employee-task-management-dar2.vercel.app
+- **Backend (Render):** https://employee-task-management-s7z1.onrender.com
+- **API base URL:** https://employee-task-management-s7z1.onrender.com/api
 
-## Important
-This is a complete starter implementation, not a substitute for running tests in your own environment. Verify MongoDB connection, CORS, deployment environment variables, and all flows before sending the assignment.
+### Backend (Render)
+Root Directory `backend`, Build `npm install`, Start `npm start`.
+Environment variables: `MONGO_URI`, `CLIENT_URL` (the Vercel frontend URL, without a trailing slash), `PORT` (optional).
+
+### Frontend (Vercel)
+Root Directory `frontend`, Build `npm run build`, Output `dist`.
+Environment variable: `VITE_API_URL=https://employee-task-management-s7z1.onrender.com/api`.
+`vercel.json` contains a rewrite so React Router routes work on refresh.
+
+> Note: the backend runs on Render's free plan, so the first request after inactivity can take 30-60 seconds.
